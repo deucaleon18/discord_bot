@@ -3,16 +3,44 @@ const Discord=require('discord.js')
 const client=new Discord.Client()
 // const uri=process.env.MONGO_URI
 
-const axios = require('axios');
+const PORT=process.env.port || 3000;
+const triggers = ['bleak',
+'depressed',
+'daunting',
+'disheartening',
+'dismal',
+'dispiriting',
+'distressing',
+'dreary',
+'gloomy',
+'heartbreaking',
+'sad',
+'black',
+'dejecting',
+'saddening',
+'funereal',
+'hopeless',
+'joyless',
+'melancholic',
+'melancholy',
+'mournful',
+'oppressive',
+'dark',
+'cry',
+'crying',
+'lonely',
+'existential',
+'worst',
+'toxic']
 
+
+const axios = require('axios');
+let results;
 const getComment=async()=>{
-  const results=await axios.get('http://localhost:3000/comments')
-  console.log(results.data.comments[0].quote);
+   results=await axios.get(`http://localhost:${PORT}/comments`)
 }
 
 getComment();
-
-
 
 
 client.on('ready',()=>{
@@ -23,18 +51,14 @@ client.on('ready',()=>{
 client.on('message',(message)=>{
     if(message.author.bot) return ;
     console.log(`${message.content}:${message.author}`)
-    // if(message.content==='Hello'){
-    //     message.channel.send('Hello')
-    // }
-    // if(message.content==='Pui'){
-    //     message.channel.send('We love PPUI')
-    // }
-    // if(message.content==='Wassup'){
-    //     message.channel.send('Chal na lavde kaam kar')
-    // }
-    // if(message.content==='sad'||message.content==='depressed'){
+    if(message.content==="$Hello"){
+        message.channel.send(`Hi ${message.author}`)
+        
+    }
    
-        // message.channel.send(`${motivation[0].quote}`)
-    // }
+
+    if(triggers.some(word=>message.content.includes(word))){
+        message.channel.send(`${results.data.comments[Math.floor(Math.random() * results.data.comments.length)].quote}`)
+    }
 })
 client.login(process.env.TOKEN)

@@ -6,6 +6,7 @@ const uri=process.env.MONGO_URI
 const mongoose=require('mongoose')
 const commentRouter=require('./routes/commentRouter')
 
+
 app.use(morgan('dev'))
 app.use('/comments',commentRouter)
 
@@ -27,7 +28,5 @@ try {
   const http =require('http')
   const hostname='localhost'
   
-  http.createServer(app).listen(PORT,hostname,()=>{
-    console.log(`The server is up and running on port:${PORT}`)
-  })
+  http.createServer(app).listen(PORT,hostname)
   
