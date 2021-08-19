@@ -15,7 +15,7 @@ try {
      mongoose.connect(
       uri,
       { useNewUrlParser: true, useUnifiedTopology: true },
-      () => console.log(" Mongoose is connected")
+      () => console.log("Mongoose is connected")
     );
   
   } catch (e) {
